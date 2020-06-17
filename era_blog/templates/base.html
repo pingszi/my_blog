@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="{{ SITE_KEY}}">
+    <meta name="description" content="{{ SITE_DESC }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>{% block title %}{% endblock %}{{ SITE_NAME }}</title>
+    <link rel="icon" type="image/png" href="https://image.3001.net/images/20191031/15724874583730.png">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/materialize.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/aos.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lightgallery.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/matery.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/my.css' %}">
+    {% block css %}{% endblock %}
+    {% block js %}{% endblock %}
+    <script src="{% static 'js/jquery-2.2.0.min.js' %}"></script>
+    </head>
+<body>
+    <header class="navbar-fixed">
+        <nav id="headNav" class="bg-color nav-transparent">
+            <div id="navContainer" class="nav-wrapper head-container">
+                <div class="brand-logo">
+                    <a href="/" class="waves-effect waves-light">
+                        <img src="https://image.3001.net/images/20191031/15724874583730.png" class="logo-img" alt="LOGO">
+                        <span class="logo-span">Pings</span>
+                    </a>
+                </div>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+                <ul class="right nav-menu">
+                    <li class="hide-on-med-and-down nav-item">
+                        <a href="/" class="waves-effect waves-light">
+                          <i class="fas fa-home" style="zoom: 0.6;"></i>
+                          <span>首页</span>
+                        </a>
+                    </li>
+
+                    {% for category in active_categories %}
+                    <li class="hide-on-med-and-down nav-item">
+                        <a href="{% url 'article_category' category.id %}" class="waves-effect waves-light">
+                          <i class="{{ category.icon }}" style="zoom: 0.6;"></i>
+                          <span>{{ category.name }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+
+                    <li class="hide-on-med-and-down nav-item">
+                        <a href="{% url 'friends' %}" class="waves-effect waves-light">
+                          <i class="fab fa-ravelry" style="zoom: 0.6;"></i>
+                          <span>友情链接</span>
+                        </a>
+                    </li>
+                    <li class="hide-on-med-and-down nav-item">
+                        <a href="/about/" class="waves-effect waves-light">
+                            <i class="fab fa-gg" style="zoom: 0.6;"></i><span>关于</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="searchIcon" class="waves-effect waves-light">
+                          <i class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- 手机菜单栏 -->
+                <div id="mobile-nav" class="side-nav sidenav">
+                    <div class="mobile-head bg-color">
+                        <img src="https://image.3001.net/images/20191031/15724874583730.png" class="logo-img circle responsive-img">
+                        <div class="logo-name">Pings</div>
+                        <div class="logo-desc">
+                            Pings个人博客
+                        </div>
+                    </div>
+                    <ul class="menu-list mobile-menu-list">
+                        <li class="m-nav-item">
+		                    <a href="/" class="waves-effect waves-light">
+			                    <i class="fa-fw fas fa-home"></i>
+                                首页
+                            </a>
+                        </li>
+
+                        {% for category in active_categories %}
+                            <li class="m-nav-item">
+		                    <a href="{% url 'article_category' category.id %}" class="waves-effect waves-light">
+			                    <i class="fa-fw {{ category.icon }}"></i>
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        <li class="m-nav-item">
+                            <a href="{% url 'friends' %}" class="waves-effect waves-light">
+                                <i class="fa-fw fab fa-ravelry"></i>
+                                友情链接
+                            </a>
+                        </li>
+                        <li class="m-nav-item">
+                            <a href="/about/" class="waves-effect waves-light">
+                                <i class="fa-fw fab fa-gg"></i>
+                                关于
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block custom_style %}
+    <style>
+        .carousel-control {
+            width: 45px;
+            height: 45px;
+            line-height: 55px;
+            border-radius: 45px;
+            background: transparent;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        #prev-cover {
+            position: absolute;
+            top: 48%;
+            left: 8px;
+        }
+
+        #next-cover {
+            position: absolute;
+            top: 48%;
+            right: 8px;;
+        }
+
+        #prev-cover i {
+            margin-right: 3px;
+        }
+
+        #next-cover i {
+            margin-left: 3px;
+        }
+
+        .carousel-control:hover {
+            background-color:rgba(0, 0, 0, .4);
+        }
+
+        .carousel-control i {
+            color: #fff;
+            font-size: 2.4rem;
+        }
+
+        html, body {
+            height:100%;
+        }
+
+        #page {
+                height:100%;
+                min-height: 100%;
+                width:100%;
+            }
+    </style>
+    {% endblock %}
+
+    {% block banner %}
+    {% endblock %}
+
+    <script>
+        $(function () {
+            let coverSlider = $('.carousel');
+            coverSlider.carousel({
+                duration: Number('120'),
+                fullWidth: true,
+                indicators: 'false' === 'true'
+            });
+
+            let carouselIntervalId;
+            let restartPlay = function () {
+            };
+        });
+    </script>
+
+    {% block contents %}
+    {% endblock %}
+
+
+    <!-- 翻页按钮 -->
+    {% block pagination %}
+    {% endblock %}
+
+    <!-- 页脚 -->
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="https://blog.pings.fun" target="_blank">Pings个人博客</a>
+            |&nbsp;Powered by&nbsp;<a href="https://www.djangoproject.com/" target="_blank" rel="nofollow">Django</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank" rel="nofollow">Matery</a>
+            <br>
+            <span id="icp"><img src="{% static 'medias/icp.png' %}" style="vertical-align: text-bottom;" />
+                <a href="{{ SITE_ICP_URL }}" target="_blank" rel="nofollow">{{ SITE_ICP }}</a>
+            </span>
+
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:275598139@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+    <a href="/article/" class="tooltipped" target="_blank" data-tooltip="文章更新动态" data-position="top" data-delay="50">
+        <i class="far fa-calendar-alt"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+    <!-- 滚动进度条 -->
+    <div class="progress-bar"></div>
+
+    <!-- 搜索遮罩框 -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div class="search-header">
+                <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+                <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input">
+            </div>
+            <div id="searchResult"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/search.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            //**点击搜索
+            $("#searchIcon").click(() => {
+                $("#searchModal").modal('open');
+                searchFunc("/" + "allArchive", 'searchInput', 'searchResult');
+            });
+        });
+    </script>
+    <!-- 回到顶部按钮 -->
+    <div id="backTop" class="top-scroll">
+        <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <script src="{% static '/js/materialize.min.js' %}"></script>
+    <script src="{% static '/js/masonry.pkgd.min.js' %}"></script>
+    <script src="{% static '/js/aos.js' %}"></script>
+    <script src="{% static '/js/scrollProgress.min.js' %}"></script>
+    <script src="{% static '/js/lightgallery-all.min.js' %}"></script>
+    <script src="{% static '/js/matery.js' %}"></script>
+    <script src="{% static '/js/clicklove.js' %}" async="async"></script>
+    <script src="{% static '/js/instantpage.js' %}" type="module"></script>
+    <script src="{% static 'js/prism.js' %}"></script>
+    <script src="{% static 'js/Valine.min.js' %}"></script>
+</body>
+</html>

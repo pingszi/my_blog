@@ -1,0 +1,10 @@
+{
+    //"python.pythonPath": "/anaconda3/envs/oms/bin/python",
+    "python.pythonPath": "F:\\python\\Anaconda3\\envs\\blog\\python.exe",
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}
