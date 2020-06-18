@@ -172,7 +172,6 @@ LOGGING = {
 # 静态文件配置
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [(os.path.join(BASE_DIR, 'era_blog/pages'))]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
