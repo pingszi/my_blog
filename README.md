@@ -18,17 +18,17 @@ docker run -p 80:80 -p 8088:8088 -v /root/uploads/myblog:/opt/project/product/my
 
 # 界面
 ## 首页
-![首页](http://47.115.184.144:81/static/image/blog-1.png)
+![首页](https://github.com/pingszi/my_blog/tree/master/era_blog/static/image/blog-1.png)
 ## 分类
-![分类](http://47.115.184.144:81/static/image/blog-2.png)
+![分类](https://github.com/pingszi/my_blog/tree/master/era_blog/static/image/blog-2.png)
 ## 文章
-![文章](http://47.115.184.144:81/static/image/blog-3.png)
+![文章](https://github.com/pingszi/my_blog/tree/master/era_blog/static/image/blog-3.png)
 ## 分类(移动端)
-![分类(移动端)](http://47.115.184.144:81/static/image/blog-4.png)
+![分类(移动端)](https://github.com/pingszi/my_blog/tree/master/era_blog/static/image/blog-4.png)
 ## 文章(移动端)
-![文章(移动端)](http://47.115.184.144:81/static/image/blog-5.png)
+![文章(移动端)](https://github.com/pingszi/my_blog/tree/master/era_blog/static/image/blog-5.png)
 ## 搜索(移动端)
-![搜索(移动端)](http://47.115.184.144:81/static/image/blog-6.png)
+![搜索(移动端)](https://github.com/pingszi/my_blog/tree/master/era_blog/static/image/blog-6.png)
 
 # 更新记录
 - 2020-06-17 项目开发完成
