@@ -34,7 +34,7 @@ COPY conf/start.sh /opt/project/product/start.sh
 # 添加项目
 WORKDIR /opt/project/product
 RUN apt -y install git
-RUN git clone https://github.com/pingszi/my_blog.git
+RUN git clone -b qiniu-cloud https://github.com/pingszi/my_blog.git
 
 # 正式模式配置settings
 WORKDIR /opt/project/product/my_blog/my_blog

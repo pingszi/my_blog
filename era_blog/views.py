@@ -236,10 +236,9 @@ class About(View):
 
         temp_list = []  # 临时集合
         tags_list = []  # 存放每个标签对应的文章数
-        tags = Tag.objects.all()
         for tag in tags:
             temp_list.append(tag.name)
-            temp_list.append(len(tag.article_set.all()))
+            temp_list.append(len(tag.article_set.filter(enabled=True)))
             tags_list.append(temp_list)
             temp_list = []
 

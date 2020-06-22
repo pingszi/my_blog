@@ -5,9 +5,9 @@ from django.db import models
 from .models import Links, Article, Category, Tag
 
 
-admin.site.site_header="Pings博客后台"
-admin.site.site_title="Pings博客"
-admin.site.index_title="Pings博客"
+admin.site.site_header="廊桥村博客后台"
+admin.site.site_title="廊桥村博客"
+admin.site.index_title="廊桥村博客"
 
 
 # 文章
