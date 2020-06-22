@@ -39,6 +39,10 @@ RUN git clone https://github.com/pingszi/my_blog.git
 # 正式模式配置settings
 WORKDIR /opt/project/product/my_blog/my_blog
 RUN sed -i "s/^DEBUG = True/DEBUG = False/" settings.py
+# 修改七牛配置
+RUN echo "QINIU_ACCESS_KEY = 'test'" >> settings.py
+RUN echo "QINIU_SECRET_KEY = 'test'" >> settings.py
+
 # 提取静态文件
 RUN python3 /opt/project/product/my_blog/manage.py collectstatic
 
