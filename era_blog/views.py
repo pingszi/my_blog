@@ -1,3 +1,4 @@
+import os
 import random
 import datetime
 import mistune
@@ -9,9 +10,15 @@ from django.views.generic.base import View
 from django.conf import settings
 from django.http import HttpResponse
 from django.core import serializers
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.core.files.storage import default_storage
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+from mdeditor.views import MDEDITOR_CONFIGS
 
 from .models import Links, Article, Category, Tag
+from my_blog import settings
 
 
 def global_setting(request):
@@ -38,8 +45,8 @@ class Index(View):
     首页展示
     """
     def get(self, request):
-        all_articles = Article.objects.all().defer('content').order_by('-add_time')
-        top_articles = Article.objects.filter(is_recommend=1).defer('content')
+        all_articles = Article.objects.filter(enabled=True).defer('content').order_by('-add_time')
+        top_articles = Article.objects.filter(enabled=True, is_recommend=1).defer('content').order_by('-add_time')
         # 首页分页功能
         try:
             page = request.GET.get('page', 1)
@@ -79,10 +86,10 @@ class Detail(View):
         output = mk(article.content)
 
         #**查找上一篇
-        previous_article = Article.objects.filter(category=article.category, id__lt=pk).defer('content').order_by('-id')[:1]
+        previous_article = Article.objects.filter(enabled=True, category=article.category, id__lt=pk).defer('content').order_by('-id')[:1]
         previous_article = previous_article[0] if len(previous_article) else None
         #**查找下一篇
-        next_article = Article.objects.filter(category=article.category, id__gt=pk).defer('content').order_by('id')[:1]
+        next_article = Article.objects.filter(enabled=True, category=article.category, id__gt=pk).defer('content').order_by('id')[:1]
         next_article = next_article[0] if len(next_article) else None
 
         return render(request, 'detail.html', {
@@ -98,7 +105,7 @@ class Archive(View):
     文章归档
     """
     def get(self, request):
-        all_articles = Article.objects.all().defer('content').order_by('-add_time')
+        all_articles = Article.objects.filter(enabled=True).defer('content').order_by('-add_time')
         all_date = all_articles.values('add_time')
         latest_date = all_date[0]['add_time']
         all_date_list = []
@@ -144,7 +151,7 @@ class Archive(View):
 
 class CategoryList(View):
     def get(self, request):
-        categories = Category.objects.all()
+        categories = Category.objects.filter(active=True)
 
         return render(request, 'category.html', {
             'categories': categories,
@@ -153,8 +160,8 @@ class CategoryList(View):
 
 class CategoryView(View):
     def get(self, request, pk):
-        categories = Category.objects.all()
-        articles = Category.objects.get(id=int(pk)).article_set.all().defer('content')
+        categories = Category.objects.filter(active=True)
+        articles = Category.objects.get(id=int(pk)).article_set.filter(enabled=True).defer('content').order_by('-add_time')
 
         try:
             page = request.GET.get('page', 1)
@@ -173,7 +180,7 @@ class CategoryView(View):
 
 class TagList(View):
     def get(self, request):
-        tags = Tag.objects.all()
+        tags = Tag.objects.filter(enabled=True)
         return render(request, 'tag.html', {
             'tags': tags,
         })
@@ -181,8 +188,8 @@ class TagList(View):
 
 class TagView(View):
     def get(self, request, pk):
-        tags = Tag.objects.all()
-        articles = Tag.objects.get(id=int(pk)).article_set.all().defer('content')
+        tags = Tag.objects.filter(enabled=True)
+        articles = Tag.objects.get(id=int(pk)).article_set.filter(enabled=True).defer('content').order_by('-add_time')
 
         try:
             page = request.GET.get('page', 1)
@@ -201,9 +208,9 @@ class TagView(View):
 
 class About(View):
     def get(self, request):
-        articles = Article.objects.all().defer('content').order_by('-add_time')
-        categories = Category.objects.all()
-        tags = Tag.objects.all()
+        articles = Article.objects.filter(enabled=True).defer('content').order_by('-add_time')
+        categories = Category.objects.filter(active=True)
+        tags = Tag.objects.filter(enabled=True)
 
         all_date = articles.values('add_time')
 
@@ -257,6 +264,45 @@ class About(View):
 
 class AllArticle(View):
     def get(self, request):
-        articles = Article.objects.order_by('-add_time').values('id', 'title', 'desc')
+        articles = Article.objects.filter(enabled=True).order_by('-add_time').values('id', 'title', 'desc')
         rst = [{'id': d['id'], 'title': d['title'], 'content': d['desc']} for d in articles]
         return HttpResponse(json.dumps(rst, ensure_ascii=False))
+
+
+class MdEditorUploadView(View):
+    """
+    mdeditor上传图片到默认的文件系统
+    """
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(MdEditorUploadView, self).dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        upload_image = request.FILES.get("editormd-image-file", None)
+
+        # image none check
+        if not upload_image:
+            return JsonResponse({
+                'success': 0,
+                'message': "未获取到要上传的图片",
+                'url': ""
+            })
+
+        # image format check
+        file_name_list = upload_image.name.split('.')
+        file_extension = file_name_list.pop(-1)
+        if file_extension not in MDEDITOR_CONFIGS['upload_image_formats']:
+            return JsonResponse({
+                'success': 0,
+                'message': "上传图片格式错误，允许上传图片格式为：%s" % ','.join(
+                    MDEDITOR_CONFIGS['upload_image_formats']),
+                'url': ""
+            })
+
+        # image floder
+        file_path = os.path.join(MDEDITOR_CONFIGS['image_folder'], '{0:%Y%m%d%H%M%S%f}.{1}'.format(datetime.datetime.now(), file_extension))
+        # save image
+        file_url = default_storage.save(file_path, upload_image)
+
+        return JsonResponse({'success': 1, 'message': "上传成功！", 'url': os.path.join(settings.MEDIA_URL, file_url)})

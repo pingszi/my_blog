@@ -13,10 +13,10 @@ admin.site.index_title="Pings博客"
 # 文章
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'cover_data', 'is_recommend', 'add_time', 'update_time')
+    list_display = ('id', 'title', 'category', 'enabled', 'cover_data', 'is_recommend', 'add_time', 'update_time')
     search_fields = ('title', 'desc', 'content')
-    list_filter = ('category', 'tag', 'add_time')
-    list_editable = ('category', 'is_recommend')
+    list_filter = ('category', 'tag', 'add_time', 'enabled')
+    list_editable = ('category', 'is_recommend', 'enabled')
     list_per_page = 20
 
     fieldsets = (
@@ -46,8 +46,10 @@ class CategoryAdmin(admin.ModelAdmin):
 # 标签
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'get_items')
+    list_display = ('id', 'name', 'enabled', 'get_items')
     search_fields = ('name', )
+    list_filter = ('enabled', )
+    list_editable = ('enabled', )
     list_per_page = 20
 
 

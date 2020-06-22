@@ -21,6 +21,7 @@ class Tag(models.Model):
 
     id = models.AutoField(primary_key=True, verbose_name="编号")
     name = models.CharField(max_length=30, verbose_name='标签名称')
+    enabled = models.BooleanField(default=True, verbose_name="启用")
 
     # 统计文章数 并放入后台
     def get_items(self):
@@ -88,6 +89,7 @@ class Article(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name='文章分类', on_delete=models.DO_NOTHING)
     tag = models.ManyToManyField(Tag, verbose_name='文章标签')
+    enabled = models.BooleanField(default=True, verbose_name="启用")
 
     def cover_data(self):
         return format_html(

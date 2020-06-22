@@ -173,14 +173,11 @@ LOGGING = {
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
-MEDIA_URL = '/media/'
-
 # 网站的基本信息配置
-SITE_NAME = 'Pings博客'         # 站点名称
-SITE_DESCRIPTION = 'Pings博客'  # 站点描述
-SITE_KEYWORDS = 'Pings,博客'    # 站点关键词
-SITE_TITLE = 'Pings博客'        # 博客标题
+SITE_NAME = '廊桥村博客'         # 站点名称
+SITE_DESCRIPTION = '廊桥村博客'  # 站点描述
+SITE_KEYWORDS = '时代廊桥,廊桥村,增城,博客'    # 站点关键词
+SITE_TITLE = '廊桥村博客'        # 博客标题
 SITE_TYPE_CHINESE = '时代廊桥(增城)博客'  # 打字效果 中文内容
 SITE_TYPE_ENGLISH = 'Times langqiao (Zengcheng) blog'  # 打字效果 英文内容
 SITE_MAIL = '275598139@qq.com'  # 我的邮箱
@@ -198,3 +195,15 @@ SIMPLEUI_ICON = {
     '文章分类': 'fa fa-folder',
     '文章标签': 'fa fa-tag'
 }
+
+# **七牛云配置
+# QINIU_ACCESS_KEY = '' # AccessKey
+# QINIU_SECRET_KEY = '' # SecretKey
+QINIU_BUCKET_NAME = 'pings-static-file'  # 存储空间名字
+QINIU_BUCKET_DOMAIN = 'static.pings.fun' # 外链默认域名
+QINIU_SECURE_URL = False # 使用http
+
+PREFIX_URL = 'http://'
+MEDIA_URL = PREFIX_URL + QINIU_BUCKET_DOMAIN + "/myblog/media/"
+MEDIA_ROOT = 'myblog/media/'
+DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'  # 文件系统更改

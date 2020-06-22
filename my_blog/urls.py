@@ -14,14 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from era_blog.views import MdEditorUploadView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mdeditor/', include('mdeditor.urls')),
+    
+    # path('mdeditor/', include('mdeditor.urls')),
+    re_path('mdeditor/uploads/', MdEditorUploadView.as_view(), name='uploads'),
 
     # **ear_blog
     path('', include('era_blog.urls')),

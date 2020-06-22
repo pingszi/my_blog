@@ -126,3 +126,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# qiniu
+.qiniu_pythonsdk_hostscache.json
