@@ -25,7 +25,7 @@ class ArticleAdmin(admin.ModelAdmin):
         }),
         ('其他设置', {
             'classes': ('collapse', ),
-            'fields': ('cover', 'desc', 'is_recommend', 'click_count', 'tag', 'category', 'add_time'),
+            'fields': ('cover', 'desc', 'enabled', 'is_recommend', 'click_count', 'tag', 'category', 'add_time'),
         }),
     )
 
