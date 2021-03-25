@@ -22,7 +22,7 @@ openpyxl==3.0.3
 Pillow==8.1.1
 pylint==2.5.3
 pytz==2020.1
-PyYAML==5.3.1
+PyYAML==5.4
 six==1.15.0
 sqlparse==0.3.1
 tablib==2.0.0
