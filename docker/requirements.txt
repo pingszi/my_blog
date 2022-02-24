@@ -16,7 +16,7 @@ lazy-object-proxy==1.4.3
 MarkupPy==1.14
 mccabe==0.6.1
 mistune==0.8.4
-mysqlclient==1.4.6
+PyMySQL==1.0.2
 odfpy==1.4.1
 openpyxl==3.0.3
 Pillow==8.1.1

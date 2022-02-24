@@ -85,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myblog',
-        'HOST': 'www.pingssys.com',
+        'HOST': 'www.pingswms.com',
         'PORT': '31001',
         'USER': 'root',
         'PASSWORD': 'Zhou1182969',
@@ -198,3 +198,7 @@ SIMPLEUI_ICON = {
     '文章分类': 'fa fa-folder',
     '文章标签': 'fa fa-tag'
 }
+
+#**django mysql客户端默认为mysqlclient，比较难安装。使用pymysql替换mysqlclient
+import pymysql
+pymysql.install_as_MySQLdb()
