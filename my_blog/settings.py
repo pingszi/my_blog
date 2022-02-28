@@ -85,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myblog',
-        'HOST': 'www.pingssys.com',
+        'HOST': 'www.pingswms.com',
         'PORT': '31001',
         'USER': 'root',
         'PASSWORD': 'Zhou1182969',
@@ -207,3 +207,6 @@ PREFIX_URL = 'http://'
 MEDIA_URL = PREFIX_URL + QINIU_BUCKET_DOMAIN + "/myblog/media/"
 MEDIA_ROOT = 'myblog/media/'
 DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'  # 文件系统更改
+#**django mysql客户端默认为mysqlclient，比较难安装。使用pymysql替换mysqlclient
+import pymysql
+pymysql.install_as_MySQLdb()
