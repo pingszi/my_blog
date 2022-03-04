@@ -197,8 +197,8 @@ SIMPLEUI_ICON = {
 }
 
 # **七牛云配置
-QINIU_ACCESS_KEY = 'c-cYa6usEF3hBVAIhlL_tNqry5UkMhrRJwRWX55G' # AccessKey
-QINIU_SECRET_KEY = 'vWkvphi-0OxDhBtLabbSWABBoKPV0m3nnjPue0kR' # SecretKey
+# QINIU_ACCESS_KEY = '' # AccessKey
+# QINIU_SECRET_KEY = '' # SecretKey
 QINIU_BUCKET_NAME = 'pings-static-file'  # 存储空间名字
 QINIU_BUCKET_DOMAIN = 'static.pings.fun' # 外链默认域名
 QINIU_SECURE_URL = False # 使用http

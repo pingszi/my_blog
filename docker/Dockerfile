@@ -51,4 +51,4 @@ WORKDIR /opt/project/product
 CMD bash start.sh
 
 # docker build -t pings/my_blog -f my_blog/docker/Dockerfile .
-# docker run -p 80:80 -p 8088:8088 --name my_blog pings/my_blog
+# docker run -p 10001:80 -p 10009:8088 --name my_blog pings/my_blog
