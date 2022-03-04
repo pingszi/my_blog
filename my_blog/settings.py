@@ -174,12 +174,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # 网站的基本信息配置
-SITE_NAME = '廊桥村博客'         # 站点名称
-SITE_DESCRIPTION = '廊桥村博客'  # 站点描述
-SITE_KEYWORDS = '时代廊桥,廊桥村,增城,博客'    # 站点关键词
-SITE_TITLE = '廊桥村博客'        # 博客标题
-SITE_TYPE_CHINESE = '时代廊桥(增城)博客'  # 打字效果 中文内容
-SITE_TYPE_ENGLISH = 'Times langqiao (Zengcheng) blog'  # 打字效果 英文内容
+SITE_NAME = 'Pings博客'         # 站点名称
+SITE_DESCRIPTION = 'Pings博客'  # 站点描述
+SITE_KEYWORDS = 'python,django,java,spring,微服务,博客'    # 站点关键词
+SITE_TITLE = 'Pings博客'        # 博客标题
+SITE_TYPE_CHINESE = 'Pings的博客, 仅用于开发技术交流'  # 打字效果 中文内容
+SITE_TYPE_ENGLISH = 'python django java spring springcloud dubbo docker k8s'  # 打字效果 英文内容
 SITE_MAIL = '275598139@qq.com'  # 我的邮箱
 SITE_ICP = '粤ICP备18148895号'   # 网站备案号 
 SITE_ICP_URL = 'http://beian.miit.gov.cn'  # 备案号超链接地址  
@@ -197,8 +197,8 @@ SIMPLEUI_ICON = {
 }
 
 # **七牛云配置
-# QINIU_ACCESS_KEY = '' # AccessKey
-# QINIU_SECRET_KEY = '' # SecretKey
+QINIU_ACCESS_KEY = 'c-cYa6usEF3hBVAIhlL_tNqry5UkMhrRJwRWX55G' # AccessKey
+QINIU_SECRET_KEY = 'vWkvphi-0OxDhBtLabbSWABBoKPV0m3nnjPue0kR' # SecretKey
 QINIU_BUCKET_NAME = 'pings-static-file'  # 存储空间名字
 QINIU_BUCKET_DOMAIN = 'static.pings.fun' # 外链默认域名
 QINIU_SECURE_URL = False # 使用http
@@ -207,6 +207,7 @@ PREFIX_URL = 'http://'
 MEDIA_URL = PREFIX_URL + QINIU_BUCKET_DOMAIN + "/myblog/media/"
 MEDIA_ROOT = 'myblog/media/'
 DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'  # 文件系统更改
+
 #**django mysql客户端默认为mysqlclient，比较难安装。使用pymysql替换mysqlclient
 import pymysql
 pymysql.install_as_MySQLdb()
