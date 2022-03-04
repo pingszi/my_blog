@@ -13,7 +13,7 @@ pip install -r my_blog/docker/requirements.txt
 - 通过docker方式部署；
 ```
 docker build -t pings/my_blog -f my_blog/docker/Dockerfile .
-docker run -p 80:80 -p 8088:8088 -v /root/uploads/myblog:/opt/project/product/my_blog/uploads --name my_blog pings/my_blog
+docker run -p 80:80 -p 8088:8088 --name my_blog pings/my_blog
 ```
 
 # 界面

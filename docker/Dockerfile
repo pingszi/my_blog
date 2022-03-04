@@ -39,6 +39,8 @@ RUN git clone -b qiniu-cloud https://github.com/pingszi/my_blog.git
 # 正式模式配置settings
 WORKDIR /opt/project/product/my_blog/my_blog
 RUN sed -i "s/^DEBUG = True/DEBUG = False/" settings.py
+RUN sed -i "s/www.pingswms.com/127.0.0.1/" settings.py
+
 # 修改七牛配置
 RUN echo "QINIU_ACCESS_KEY = 'test'" >> settings.py
 RUN echo "QINIU_SECRET_KEY = 'test'" >> settings.py
