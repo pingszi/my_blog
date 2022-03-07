@@ -211,3 +211,6 @@ DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'  # 文件系统
 #**django mysql客户端默认为mysqlclient，比较难安装。使用pymysql替换mysqlclient
 import pymysql
 pymysql.install_as_MySQLdb()
+
+#**测试
+test = 'test'
