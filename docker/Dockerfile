@@ -10,7 +10,7 @@ RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 WORKDIR /opt/project/product
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install -i http://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
 
 # nginx
 # 安装
@@ -53,4 +53,4 @@ WORKDIR /opt/project/product
 CMD bash start.sh
 
 # docker build -t pings/my_blog -f my_blog/docker/Dockerfile .
-# docker run -p 10001:80 -p 10009:8088 --name my_blog pings/my_blog
+# docker run -p 9091:80 -p 9099:8088 --name my_blog pings/my_blog
