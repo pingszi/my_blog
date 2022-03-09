@@ -4,7 +4,7 @@
 - 基于python django框架的个人博客模版；
 
 # 项目地址
-- [my_blog](http://time.pings.fun)
+- [my_blog](http://blog.pings.fun)
 
 # 安装
 ## 安装运行环境
