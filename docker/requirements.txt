@@ -15,7 +15,7 @@ jdcal==1.4.1
 lazy-object-proxy==1.4.3
 MarkupPy==1.14
 mccabe==0.6.1
-mistune==0.8.4
+mistune==2.0.3
 PyMySQL==1.0.2
 odfpy==1.4.1
 openpyxl==3.0.3
