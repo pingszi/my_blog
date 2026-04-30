@@ -85,10 +85,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myblog',
-        'HOST': 'www.pingswms.com',
-        'PORT': '31001',
+        'HOST': 'www.pingssys.com',
+        'PORT': '13306',
         'USER': 'root',
-        'PASSWORD': 'Zhou1182969',
+        'PASSWORD': 'pings@derr5ygfd43d',
     }
 }
 
@@ -181,8 +181,8 @@ SITE_NAME = 'Pings博客'         # 站点名称
 SITE_DESCRIPTION = 'Pings博客'  # 站点描述
 SITE_KEYWORDS = 'Pings,博客'    # 站点关键词
 SITE_TITLE = 'Pings博客'        # 博客标题
-SITE_TYPE_CHINESE = '时代廊桥(增城)博客'  # 打字效果 中文内容
-SITE_TYPE_ENGLISH = 'Times langqiao (Zengcheng) blog'  # 打字效果 英文内容
+SITE_TYPE_CHINESE = 'Pings的博客，欢迎大家交流。'  # 打字效果 中文内容
+SITE_TYPE_ENGLISH = 'Pings blog. Welcome everyone to exchange ideas.'  # 打字效果 英文内容
 SITE_MAIL = '275598139@qq.com'  # 我的邮箱
 SITE_ICP = '粤ICP备18148895号'   # 网站备案号 
 SITE_ICP_URL = 'http://beian.miit.gov.cn'  # 备案号超链接地址  

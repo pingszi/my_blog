@@ -1,4 +1,4 @@
-FROM python:3.7.7
+FROM python:3.8.20
 
 #**维护者
 MAINTAINER Pings 275598139@qq.com
