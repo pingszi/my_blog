@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'simpleui',
     'era_blog.apps.EraBlogConfig',
     'import_export',
-    'mdeditor',
+    'martor',
     'pure_pagination',
 
     'django.contrib.admin',
@@ -197,8 +197,8 @@ SIMPLEUI_ICON = {
 }
 
 # **七牛云配置
-QINIU_ACCESS_KEY = 'c-cYa6usEF3hBVAIhlL_tNqry5UkMhrRJwRWX55G' # AccessKey
-QINIU_SECRET_KEY = 'vWkvphi-0OxDhBtLabbSWABBoKPV0m3nnjPue0kR' # SecretKey
+QINIU_ACCESS_KEY = '' # AccessKey
+QINIU_SECRET_KEY = '' # SecretKey
 QINIU_BUCKET_NAME = 'pings-static-file'  # 存储空间名字
 QINIU_BUCKET_DOMAIN = 'static.pings.fun' # 外链默认域名
 QINIU_SECURE_URL = False # 使用http
@@ -207,6 +207,29 @@ PREFIX_URL = 'http://'
 MEDIA_URL = PREFIX_URL + QINIU_BUCKET_DOMAIN + "/myblog/media/"
 MEDIA_ROOT = 'myblog/media/'
 DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'  # 文件系统更改
+
+# Martor 配置
+MARTOR_THEME = 'bootstrap'
+MARTOR_ENABLE_CONFIGS = {
+    'emoji': 'true',
+    'imgur': 'false',
+    'mention': 'false',
+    'jquery': 'true',
+    'living': 'false',
+    'spellcheck': 'false',
+    'hljs': 'true',
+}
+MARTOR_TOOLBAR_BUTTONS = [
+    'bold', 'italic', 'heading', 'undo', 'redo',
+    'link', 'image', 'image-upload', 'fullscreen',
+    'code', 'code-block', 'unordered-list', 'ordered-list',
+    'table', 'strikethrough', 'previewer'
+]
+
+# Martor 上传配置（继续使用七牛云存储）
+MARTOR_UPLOAD_URL = '/martor/uploader/'  # 上传接口地址
+MARTOR_UPLOAD_PATH = 'editor/'           # 文件保存路径
+MARTOR_UPLOAD_SAFE_EXTS = {'.jpg', '.jpeg', '.png', '.gif'}  # 允许的图片格式
 
 #**django mysql客户端默认为mysqlclient，比较难安装。使用pymysql替换mysqlclient
 import pymysql

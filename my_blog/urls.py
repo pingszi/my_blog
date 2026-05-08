@@ -23,9 +23,7 @@ from era_blog.views import MdEditorUploadView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    # path('mdeditor/', include('mdeditor.urls')),
-    re_path('mdeditor/uploads/', MdEditorUploadView.as_view(), name='uploads'),
+    path('martor/', include('martor.urls')),
 
     # **ear_blog
     path('', include('era_blog.urls')),

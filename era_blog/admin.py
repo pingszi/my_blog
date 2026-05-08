@@ -24,14 +24,12 @@ class ArticleAdmin(admin.ModelAdmin):
             'fields': ('title', 'content')
         }),
         ('其他设置', {
-            'classes': ('collapse', ),
-            'fields': ('cover', 'desc', 'enabled', 'is_recommend', 'click_count', 'tag', 'category', 'add_time'),
+            'fields': ('desc', 'cover', 'enabled', 'is_recommend', 'click_count', 'tag', 'category', 'add_time'),
         }),
     )
 
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '59'})},
-        models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 59})},
     }
 
 

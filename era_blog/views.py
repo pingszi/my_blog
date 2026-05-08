@@ -1,7 +1,7 @@
 import os
 import random
 import datetime
-import mistune
+import markdown
 import json
 
 from operator import itemgetter
@@ -82,8 +82,15 @@ class Detail(View):
     def get(self, request, pk):
         article = Article.objects.get(id=int(pk))
         article.viewed()
-        mk = mistune.Markdown()
-        output = mk(article.content)
+        md = markdown.Markdown(extensions=[
+            'pymdownx.highlight',
+            'pymdownx.superfences',
+            'pymdownx.tasklist',
+            'pymdownx.tilde',
+            'tables',
+            'toc',
+        ])
+        output = md.convert(article.content)
 
         #**查找上一篇
         previous_article = Article.objects.filter(enabled=True, category=article.category, id__lt=pk).defer('content').order_by('-id')[:1]

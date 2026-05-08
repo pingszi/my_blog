@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.utils.html import format_html
-from mdeditor.fields import MDTextField
+from martor.models import MartorField
 
 
 class Tag(models.Model):
@@ -82,7 +82,7 @@ class Article(models.Model):
     title = models.CharField(max_length=50, verbose_name='文章标题')
     desc = models.TextField(max_length=100, verbose_name='文章描述')
     cover = models.ImageField(upload_to='article/%Y/%m/',verbose_name='文章封面')
-    content = MDTextField(verbose_name='文章内容')
+    content = MartorField(verbose_name='文章内容')
     click_count = models.IntegerField(default=0, verbose_name='点击次数')
     is_recommend = models.BooleanField(default=False, verbose_name='是否推荐')
     add_time = models.DateTimeField(default=datetime.now, verbose_name='发布时间')

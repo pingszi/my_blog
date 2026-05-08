@@ -5,8 +5,8 @@ colorama==0.4.3
 defusedxml==0.6.0
 diff-match-patch==20181111
 Django==3.2.25
-django-import-export==2.2.0
-django-mdeditor==0.1.18
+django-import-export==2.2.0f
+martor==1.6.45
 django-pure-pagination==0.3.0
 django-simpleui==4.0.2
 et-xmlfile==1.0.1
@@ -15,7 +15,8 @@ jdcal==1.4.1
 lazy-object-proxy==1.9.0
 MarkupPy==1.14
 mccabe==0.7.0
-mistune==0.8.4
+markdown==3.5.2
+pymdown-extensions==10.7.1
 PyMySQL==1.0.2
 odfpy==1.4.1
 openpyxl==3.0.3
