@@ -1,6 +1,5 @@
 {
-    "python.defaultInterpreterPath": "/Users/apple/opt/anaconda3/envs/myblog/bin/python",
-    //"python.defaultInterpreterPath": "F:\\python\\Anaconda3\\envs\\blog\\python.exe",
+    "python.defaultInterpreterPath": "/opt/homebrew/Caskroom/miniforge/base/envs/myblog",
     "python.linting.pylintArgs": [
         "--load-plugins",
         "pylint_django"

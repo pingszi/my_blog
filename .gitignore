@@ -130,3 +130,6 @@ dmypy.json
 
 # qiniu
 .qiniu_pythonsdk_hostscache.json
+
+# idea
+.idea/
