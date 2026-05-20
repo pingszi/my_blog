@@ -197,8 +197,8 @@ SIMPLEUI_ICON = {
 }
 
 # **七牛云配置
-QINIU_ACCESS_KEY = '' # AccessKey
-QINIU_SECRET_KEY = '' # SecretKey
+QINIU_ACCESS_KEY = 'c-cYa6usEF3hBVAIhlL_tNqry5UkMhrRJwRWX55G' # AccessKey
+QINIU_SECRET_KEY = 'vWkvphi-0OxDhBtLabbSWABBoKPV0m3nnjPue0kR' # SecretKey
 QINIU_BUCKET_NAME = 'pings-static-file'  # 存储空间名字
 QINIU_BUCKET_DOMAIN = 'static.pings.fun' # 外链默认域名
 QINIU_SECURE_URL = False # 使用http
@@ -212,18 +212,18 @@ DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'  # 文件系统
 MARTOR_THEME = 'bootstrap'
 MARTOR_ENABLE_CONFIGS = {
     'emoji': 'true',
-    'imgur': 'false',
-    'mention': 'false',
+    'imgur': 'true',
+    'mention': 'true',
     'jquery': 'true',
     'living': 'false',
     'spellcheck': 'false',
     'hljs': 'true',
 }
 MARTOR_TOOLBAR_BUTTONS = [
-    'bold', 'italic', 'heading', 'undo', 'redo',
-    'link', 'image', 'image-upload', 'fullscreen',
-    'code', 'code-block', 'unordered-list', 'ordered-list',
-    'table', 'strikethrough', 'previewer'
+    'bold', 'italic', 'heading', 'horizontal',
+    'pre-code', 'blockquote', 'unordered-list', 'ordered-list',
+    'link', 'image-link', 'image-upload',
+    'direct-mention', 'toggle-maximize'
 ]
 
 # Martor 上传配置（继续使用七牛云存储）

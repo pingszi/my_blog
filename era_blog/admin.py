@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.forms import TextInput, Textarea
+from django.forms import TextInput, Textarea, SelectMultiple
 from django.db import models
 
 from .models import Links, Article, Category, Tag
@@ -21,16 +21,24 @@ class ArticleAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('编辑文章', {
+            'classes': ('wide',),
             'fields': ('title', 'content')
         }),
         ('其他设置', {
-            'fields': ('desc', 'cover', 'enabled', 'is_recommend', 'click_count', 'tag', 'category', 'add_time'),
+            'fields': (('desc', 'tag', 'cover'), ('enabled', 'is_recommend', 'category')),
         }),
     )
 
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '59'})},
+        models.TextField: {'widget': Textarea(attrs={'rows': 3, 'cols': 59})},
+        models.ManyToManyField: {'widget': SelectMultiple(attrs={'size': 3})},
     }
+
+    class Media:
+        css = {
+            'all': ('css/admin-article.css',)
+        }
 
 
 # 分类

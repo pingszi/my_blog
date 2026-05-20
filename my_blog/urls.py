@@ -14,15 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path
 from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from era_blog.views import MdEditorUploadView
+from era_blog.views import MartorUploadView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('martor/uploader/', MartorUploadView.as_view()),  #覆盖Martor默认的imgur上传
     path('martor/', include('martor.urls')),
 
     # **ear_blog

@@ -1,5 +1,11 @@
 /* Here is your custom css styles. */
 
+/* 代码块字体缩小 */
+code[class*="language-"],
+pre[class*="language-"] {
+    font-size: 0.85em !important;
+}
+
 /* hexo-filter-github-emojis */
 .github-emoji{
     height: 2em;

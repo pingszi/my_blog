@@ -203,7 +203,7 @@
         }
     </style>
     <div class="row">
-        <div id="main-content" class="col s12 m12 l9">
+        <div id="main-content" class="col s12 m12 l10">
             <!-- 文章内容详情 -->
             <div id="artDetail">
                 <div class="card">
@@ -455,7 +455,7 @@
             <script type="text/javascript" src="{% static 'codeBlock/codeShrink.js' %}"></script>
             <!-- 代码块折行 -->
         </div>
-        <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div id="toc-aside" class="expanded col l2 hide-on-med-and-down">
             <div class="toc-widget">
                 <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
                 <div id="toc-content"></div>
@@ -534,10 +534,10 @@
             $('#floating-toc-btn .btn-floating').click(function () {
                 if ($tocAside.hasClass(expandedClass)) {
                     $tocAside.removeClass(expandedClass).hide();
-                    $mainContent.removeClass('l9');
+                    $mainContent.removeClass('l10');
                 } else {
                     $tocAside.addClass(expandedClass).show();
-                    $mainContent.addClass('l9');
+                    $mainContent.addClass('l10');
                 }
                 fixPostCardWidth('artDetail', 'prenext-posts');
             });
@@ -559,6 +559,24 @@
             //**文章地址
             $("#address").attr("href", location.href);
             $("#address").text(location.href)
+        });
+    </script>
+
+    <!-- Mermaid 流程图支持 -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var mermaidScripts = document.querySelectorAll('script[type="text/mermaid"]');
+            if (mermaidScripts.length > 0) {
+                mermaidScripts.forEach(function(scriptTag) {
+                    var div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = scriptTag.textContent;
+                    scriptTag.parentNode.replaceChild(div, scriptTag);
+                });
+                mermaid.initialize({ startOnLoad: false });
+                mermaid.run({ querySelector: '.mermaid' });
+            }
         });
     </script>
 </main>

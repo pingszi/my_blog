@@ -3,19 +3,17 @@ import random
 import datetime
 import markdown
 import json
+import html as html_module
 
-from operator import itemgetter
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.conf import settings
 from django.http import HttpResponse
-from django.core import serializers
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.core.files.storage import default_storage
-from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from mdeditor.views import MDEDITOR_CONFIGS
+from pure_pagination import Paginator, PageNotAnInteger
 
 from .models import Links, Article, Category, Tag
 from my_blog import settings
@@ -75,6 +73,17 @@ class Friends(View):
         })
 
 
+def mermaid_fence_format(source, language, class_name, options, md, **kwargs):
+    """自定义 mermaid 代码块渲染为 script 标签，避免浏览器解析 < 破坏语法"""
+    source = html_module.unescape(source)
+    # 过滤 nl2br 等扩展可能插入的 <br> 标签
+    source = source.replace('<br>', '\n').replace('<br/>', '\n').replace('<br />', '\n')
+    # 过滤 Windows 换行符和多余空白
+    source = source.replace('\r', '').strip()
+    # 使用 script 标签包裹，浏览器不会解析其中的 < > 字符
+    return '<script type="text/mermaid">\n%s\n</script>' % source
+
+
 class Detail(View):
     """
     文章详情页
@@ -82,14 +91,28 @@ class Detail(View):
     def get(self, request, pk):
         article = Article.objects.get(id=int(pk))
         article.viewed()
-        md = markdown.Markdown(extensions=[
-            'pymdownx.highlight',
-            'pymdownx.superfences',
-            'pymdownx.tasklist',
-            'pymdownx.tilde',
-            'tables',
-            'toc',
-        ])
+        md = markdown.Markdown(
+            extensions=[
+                'nl2br',
+                'pymdownx.highlight',
+                'pymdownx.superfences',
+                'pymdownx.tasklist',
+                'pymdownx.tilde',
+                'tables',
+                'toc',
+            ],
+            extension_configs={
+                'pymdownx.superfences': {
+                    'custom_fences': [
+                        {
+                            'name': 'mermaid',
+                            'class': 'mermaid',
+                            'format': mermaid_fence_format,
+                        }
+                    ]
+                }
+            }
+        )
         output = md.convert(article.content)
 
         #**查找上一篇
@@ -275,40 +298,33 @@ class AllArticle(View):
         return HttpResponse(json.dumps(rst, ensure_ascii=False))
 
 
-class MdEditorUploadView(View):
+class MartorUploadView(View):
     """
-    mdeditor上传图片到默认的文件系统
+    Martor上传图片到默认存储（七牛云）
     """
 
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
-        return super(MdEditorUploadView, self).dispatch(*args, **kwargs)
+        return super(MartorUploadView, self).dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        upload_image = request.FILES.get("editormd-image-file", None)
+        upload_image = request.FILES.get("markdown-image-upload", None)
 
-        # image none check
         if not upload_image:
-            return JsonResponse({
-                'success': 0,
-                'message': "未获取到要上传的图片",
-                'url': ""
-            })
+            return JsonResponse({'status': 400, 'error': '未获取到要上传的图片'})
 
-        # image format check
-        file_name_list = upload_image.name.split('.')
-        file_extension = file_name_list.pop(-1)
-        if file_extension not in MDEDITOR_CONFIGS['upload_image_formats']:
-            return JsonResponse({
-                'success': 0,
-                'message': "上传图片格式错误，允许上传图片格式为：%s" % ','.join(
-                    MDEDITOR_CONFIGS['upload_image_formats']),
-                'url': ""
-            })
+        # 格式检查
+        ext = os.path.splitext(upload_image.name)[1].lower()
+        if ext not in {'.jpg', '.jpeg', '.png', '.gif'}:
+            return JsonResponse({'status': 400, 'error': '上传图片格式错误，只允许 jpg/png/gif'})
 
-        # image floder
-        file_path = os.path.join(MDEDITOR_CONFIGS['image_folder'], '{0:%Y%m%d%H%M%S%f}.{1}'.format(datetime.datetime.now(), file_extension))
-        # save image
+        # 保存到默认存储（七牛云）
+        file_path = 'editor/{0:%Y%m%d%H%M%S%f}{1}'.format(datetime.datetime.now(), ext)
         file_url = default_storage.save(file_path, upload_image)
+        full_url = os.path.join(settings.MEDIA_URL, file_url)
 
-        return JsonResponse({'success': 1, 'message': "上传成功！", 'url': os.path.join(settings.MEDIA_URL, file_url)})
+        return JsonResponse({
+            'status': 200,
+            'name': upload_image.name,
+            'link': full_url
+        })

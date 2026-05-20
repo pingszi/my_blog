@@ -1,0 +1,29 @@
+/* content 编辑器：隐藏标签、占满宽度、高度加倍 */
+.form-row.field-content label {
+    display: none !important;
+}
+.form-row.field-content > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+.form-row.field-content .martor-field,
+.form-row.field-content .ace_editor {
+    width: 100% !important;
+}
+.form-row.field-content .ace_editor {
+    min-height: 800px !important;
+}
+
+/* desc 高度减半 */
+.form-row.field-desc textarea {
+    height: 80px !important;
+    min-height: 80px !important;
+}
+
+/* tag 多选框高度减半 */
+.form-row.field-tag select[multiple] {
+    height: auto !important;
+    min-height: 60px !important;
+}
