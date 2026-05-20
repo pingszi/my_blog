@@ -64,14 +64,30 @@
             </div>
             <div class="tag-chips">
                 {% for i in categories %}
-                <a href="{% url 'article_category' i.id %}" title="{{ i.name }}: {{ i.article_set.all | length }}">
+                <a href="{% url 'article_category' i.id %}" title="{{ i.name }}">
                     <span class="chip center-align waves-effect waves-light
-                             {% ifequal pk i.id %}chip-active{% else %}chip-default{% endifequal %} category-{% random_num %}">{{ i.name }}
+                             {% ifequal active_parent_id i.id %}chip-active{% else %}chip-default{% endifequal %} category-{% random_num %}">{{ i.name }}
                         <span class="tag-length">{{ i.article_set.all | length }}</span>
                     </span>
                 </a>
                 {% endfor %}
             </div>
+            {% for i in categories %}
+            {% ifequal active_parent_id i.id %}
+            {% if i.get_children %}
+            <div class="tag-chips" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+                {% for child in i.get_children %}
+                <a href="{% url 'article_category' child.id %}" title="{{ child.name }}: {{ child.article_set.all | length }}">
+                    <span class="chip center-align waves-effect waves-light
+                             {% ifequal pk child.id %}chip-active{% else %}chip-default{% endifequal %} category-{% random_num %}">{{ child.name }}
+                        <span class="tag-length">{{ child.article_set.all | length }}</span>
+                    </span>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endifequal %}
+            {% endfor %}
         </div>
     </div>
 </div>

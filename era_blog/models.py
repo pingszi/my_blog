@@ -46,6 +46,12 @@ class Category(models.Model):
 
     id = models.AutoField(primary_key=True, verbose_name="编号")
     name = models.CharField(max_length=30, verbose_name='分类名称')
+    parent = models.ForeignKey(
+        'self', blank=True, null=True,
+        on_delete=models.CASCADE,
+        related_name='children',
+        verbose_name='父分类'
+    )
     index = models.IntegerField(default=99, verbose_name='分类排序')
     active = models.BooleanField(default=True, verbose_name='是否添加到菜单')
     icon = models.CharField(max_length=30, default='fa fa-home', verbose_name='菜单图标')
@@ -54,6 +60,9 @@ class Category(models.Model):
     def get_items(self):
         return self.article_set.all().count()
     get_items.short_description = '文章数'
+
+    def get_children(self):
+        return self.children.filter(active=True).order_by('index')
 
     def icon_data(self):
         return format_html(

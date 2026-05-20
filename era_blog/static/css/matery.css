@@ -248,7 +248,7 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right,  #D63B30 0%, #398BCD 100%);
+    background-image: linear-gradient(to right,  #2b5876 0%, #4e4376 100%);
 }
 
 .tag-color {
@@ -276,7 +276,7 @@ mark {
     position: fixed;
     bottom: 0;
     z-index: 300;
-    background: linear-gradient(to right,  #D63B30 0%, #398BCD 100%);
+    background: linear-gradient(to right,  #2b5876 0%, #4e4376 100%);
     opacity: 0.8;
 }
 
@@ -502,10 +502,10 @@ header .go-back i {
 @-webkit-keyframes rainbow {
     0%,
     100% {
-        background: linear-gradient(to right, #D63B30 0%, #398BCD 100%);
-        background: linear-gradient(to right, #D63B30 0%, #398BCD 100%);
-        background: -moz-linear-gradient(to right, #D63B30 0%, #398BCD 100%);
-        background: -webkit-linear-gradient(to right, #D63B30 0%, #398BCD 100%);
+        background: linear-gradient(to right, #2b5876 0%, #4e4376 100%);
+        background: linear-gradient(to right, #2b5876 0%, #4e4376 100%);
+        background: -moz-linear-gradient(to right, #2b5876 0%, #4e4376 100%);
+        background: -webkit-linear-gradient(to right, #2b5876 0%, #4e4376 100%);
     }
     
 }
@@ -513,10 +513,10 @@ header .go-back i {
 @keyframes rainbow {
     0%,
     100% {
-        background: linear-gradient(to right, #D63B30 0%, #398BCD 100%);
-        background: linear-gradient(to right, #D63B30 0%, #398BCD 100%);
-        background: -moz-linear-gradient(to right, #D63B30 0%, #398BCD 100%);
-        background: -webkit-linear-gradient(to right, #D63B30 0%, #398BCD 100%);
+        background: linear-gradient(to right, #2b5876 0%, #4e4376 100%);
+        background: linear-gradient(to right, #2b5876 0%, #4e4376 100%);
+        background: -moz-linear-gradient(to right, #2b5876 0%, #4e4376 100%);
+        background: -webkit-linear-gradient(to right, #2b5876 0%, #4e4376 100%);
     }
     
 }

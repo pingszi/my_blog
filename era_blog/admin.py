@@ -35,6 +35,21 @@ class ArticleAdmin(admin.ModelAdmin):
         models.ManyToManyField: {'widget': SelectMultiple(attrs={'size': 3})},
     }
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'category':
+            field = super().formfield_for_foreignkey(db_field, request, **kwargs)
+            # 构建树形选项列表
+            choices = [('', '---------')]
+            parents = Category.objects.filter(active=True, parent=None).order_by('index')
+            for parent in parents:
+                choices.append((parent.id, parent.name))
+                children = parent.get_children()
+                for child in children:
+                    choices.append((child.id, f'\u00A0\u00A0\u00A0\u00A0└─ {child.name}'))
+            field.choices = choices
+            return field
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
     class Media:
         css = {
             'all': ('css/admin-article.css',)
@@ -44,9 +59,10 @@ class ArticleAdmin(admin.ModelAdmin):
 # 分类
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'index', 'active', 'get_items', 'icon', 'icon_data')
+    list_display = ('id', 'name', 'parent', 'index', 'active', 'get_items', 'icon', 'icon_data')
+    list_filter = ('parent', 'active')
     search_fields = ('name', )
-    list_editable = ('active', 'index', 'icon')
+    list_editable = ('active', 'index', 'icon', 'parent')
 
 
 # 标签

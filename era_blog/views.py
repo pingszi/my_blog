@@ -23,7 +23,7 @@ def global_setting(request):
     """
     将settings里面的变量 注册为全局变量
     """
-    active_categories = Category.objects.filter(active=True).order_by('index')
+    active_categories = Category.objects.filter(active=True, parent=None).order_by('index')
     return {
         'SITE_NAME': settings.SITE_NAME,
         'SITE_DESC': settings.SITE_DESCRIPTION,
@@ -181,7 +181,7 @@ class Archive(View):
 
 class CategoryList(View):
     def get(self, request):
-        categories = Category.objects.filter(active=True)
+        categories = Category.objects.filter(active=True, parent=None).order_by('index')
 
         return render(request, 'category.html', {
             'categories': categories,
@@ -190,8 +190,14 @@ class CategoryList(View):
 
 class CategoryView(View):
     def get(self, request, pk):
-        categories = Category.objects.filter(active=True)
-        articles = Category.objects.get(id=int(pk)).article_set.filter(enabled=True).defer('content').order_by('-add_time')
+        categories = Category.objects.filter(active=True, parent=None).order_by('index')
+        current_category = Category.objects.get(id=int(pk))
+        # 如果是父分类，同时展示其子分类的文章
+        category_ids = [current_category.id]
+        if current_category.parent is None:
+            child_ids = list(current_category.get_children().values_list('id', flat=True))
+            category_ids.extend(child_ids)
+        articles = Article.objects.filter(enabled=True, category_id__in=category_ids).defer('content').order_by('-add_time')
 
         try:
             page = request.GET.get('page', 1)
@@ -201,9 +207,16 @@ class CategoryView(View):
         p = Paginator(articles, 9, request=request)
         articles = p.page(page)
 
+        # 确定当前展开的父分类ID
+        if current_category.parent is None:
+            active_parent_id = current_category.id
+        else:
+            active_parent_id = current_category.parent_id
+
         return render(request, 'article_category.html', {
             'categories': categories,
             'pk': int(pk),
+            'active_parent_id': active_parent_id,
             'articles': articles
         })
 
