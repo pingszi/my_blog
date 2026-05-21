@@ -9,7 +9,7 @@ ENV LANG en_US.UTF-8
 RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 WORKDIR /opt/project/product
-COPY docker/requirements.txt .
+COPY requirements.txt .
 RUN pip install -i http://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
 
 # nginx
@@ -18,9 +18,9 @@ RUN apt-get update
 RUN apt -y install nginx
 # 配置
 WORKDIR /etc/nginx/conf.d
-COPY docker/conf/nginx/myblog.conf myblog.conf
+COPY conf/nginx/myblog.conf myblog.conf
 # 替换nginx.conf
-COPY docker/conf/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -f default.conf
 
 # uwsgi
@@ -29,7 +29,7 @@ WORKDIR /opt/project/product/script
 COPY conf/uwsgi/uwsgi.ini uwsgi.ini
 
 # 启动脚本
-COPY docker/conf/start.sh /opt/project/product/start.sh
+COPY conf/start.sh /opt/project/product/start.sh
 
 # 添加项目
 WORKDIR /opt/project/product
@@ -52,5 +52,5 @@ RUN python3 /opt/project/product/my_blog/manage.py collectstatic
 WORKDIR /opt/project/product
 CMD bash start.sh
 
-# docker build -t pings/my_blog -f my_blog/docker/Dockerfile .
+# docker build -t pings/my_blog -f Dockerfile .
 # docker run -p 9091:80 -p 9099:8088 --name my_blog pings/my_blog
