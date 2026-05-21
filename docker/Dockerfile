@@ -9,7 +9,7 @@ ENV LANG en_US.UTF-8
 RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 WORKDIR /opt/project/product
-COPY requirements.txt .
+COPY docker/requirements.txt .
 RUN pip install -i http://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
 
 # nginx
@@ -18,9 +18,9 @@ RUN apt-get update
 RUN apt -y install nginx
 # 配置
 WORKDIR /etc/nginx/conf.d
-COPY conf/nginx/myblog.conf myblog.conf
+COPY docker/conf/nginx/myblog.conf myblog.conf
 # 替换nginx.conf
-COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY docker/conf/nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -f default.conf
 
 # uwsgi
@@ -29,7 +29,7 @@ WORKDIR /opt/project/product/script
 COPY conf/uwsgi/uwsgi.ini uwsgi.ini
 
 # 启动脚本
-COPY conf/start.sh /opt/project/product/start.sh
+COPY docker/conf/start.sh /opt/project/product/start.sh
 
 # 添加项目
 WORKDIR /opt/project/product
