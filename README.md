@@ -38,3 +38,7 @@ docker run -p 80:80 -p 8088:8088 --name my_blog pings/my_blog
 - 2020-06-22 
     - 图片改为存储到七牛云
     - 文章和标签表增加启用字段
+- 2026-05-22 
+    - markdown改成martor
+    - 升级django版本
+    - 增加子分类
