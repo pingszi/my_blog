@@ -8,11 +8,11 @@
 
 # 安装
 ## 安装运行环境
-pip install -r my_blog/docker/requirements.txt
+pip install -r equirements.txt
 ## 正式环境部署
 - 通过docker方式部署；
 ```
-docker build -t pings/my_blog -f my_blog/docker/Dockerfile .
+docker build -t pings/my_blog -f Dockerfile .
 docker run -p 80:80 -p 8088:8088 --name my_blog pings/my_blog
 ```
 

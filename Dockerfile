@@ -10,7 +10,7 @@ RUN ln -s -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 WORKDIR /opt/project/product
 COPY requirements.txt .
-RUN pip install -i http://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+RUN pip install -r requirements.txt
 
 # nginx
 # 安装
