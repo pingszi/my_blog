@@ -1,4 +1,4 @@
-FROM python:3.8.20
+FROM registry.cn-hangzhou.aliyuncs.com/pings/python:3.8.20
 
 #**维护者
 MAINTAINER Pings 275598139@qq.com
