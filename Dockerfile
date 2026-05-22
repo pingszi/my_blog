@@ -41,9 +41,9 @@ WORKDIR /opt/project/product/my_blog/my_blog
 RUN sed -i "s/^DEBUG = True/DEBUG = False/" settings.py
 RUN sed -i "s/www.pingssys.com/172.22.152.171/" settings.py
 
-# 修改七牛配置
-RUN echo "QINIU_ACCESS_KEY = os.environ.get('QINIU_ACCESS_KEY', '')" >> settings.py
-RUN echo "QINIU_SECRET_KEY = os.environ.get('QINIU_SECRET_KEY', '')" >> settings.py
+# 修改七牛配置（用sed替换而非追加，避免重复赋值）
+RUN sed -i "s/^QINIU_ACCESS_KEY = .*/QINIU_ACCESS_KEY = os.environ.get('QINIU_ACCESS_KEY', '')/" settings.py
+RUN sed -i "s/^QINIU_SECRET_KEY = .*/QINIU_SECRET_KEY = os.environ.get('QINIU_SECRET_KEY', '')/" settings.py
 
 # 提取静态文件
 RUN python3 /opt/project/product/my_blog/manage.py collectstatic
