@@ -199,6 +199,14 @@ SIMPLEUI_ICON = {
 # **七牛云配置
 QINIU_ACCESS_KEY = '' # AccessKey
 QINIU_SECRET_KEY = '' # SecretKey
+
+# === 临时调试：打印Django实际读到的key（部署排查后可删除）===
+import sys
+print('[QINIU DEBUG] os.environ QINIU_ACCESS_KEY =', repr(os.environ.get('QINIU_ACCESS_KEY')), file=sys.stderr)
+print('[QINIU DEBUG] os.environ QINIU_SECRET_KEY =', repr(os.environ.get('QINIU_SECRET_KEY')), file=sys.stderr)
+print('[QINIU DEBUG] settings  QINIU_ACCESS_KEY =', repr(QINIU_ACCESS_KEY), file=sys.stderr)
+print('[QINIU DEBUG] settings  QINIU_SECRET_KEY =', repr(QINIU_SECRET_KEY), file=sys.stderr)
+sys.stderr.flush()
 QINIU_BUCKET_NAME = 'pings-static-file'  # 存储空间名字
 QINIU_BUCKET_DOMAIN = 'static.pings.fun' # 外链默认域名
 QINIU_SECURE_URL = False # 使用http
