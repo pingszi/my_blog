@@ -25,7 +25,7 @@ pytz==2020.1
 PyYAML==5.4
 six==1.15.0
 sqlparse==0.4.4
-tablib==2.0.0
+tablib==3.10.0
 tomli==2.0.1
 typed-ast==1.5.5
 wincertstore==0.2
